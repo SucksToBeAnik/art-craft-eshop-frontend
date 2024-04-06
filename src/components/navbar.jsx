@@ -1,17 +1,60 @@
 "use client";
 
+export const dynamic = 'force-dynamic'
+
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
+import { getCurrentUser } from "@/actions";
+import Avatar from "./avatar";
+import { useSearchParams } from "next/navigation";
+import {actionLogutUser} from "@/actions"
+import { FaSpinner } from "react-icons/fa";
+import { Suspense } from "react";
+
+
 
 const navLinks = {
   Shops: "/shops",
   Products: "/products",
 };
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+function isEmpty(obj) {
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+const NavbarComponent = () => {
+  const searchParams = useSearchParams()
+  const isActive = searchParams.get('active') === 'true'
+
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  async function handleLogout(){
+    await actionLogutUser()
+    setUser({})
+  }
+
+  useEffect(() => {
+    async function getUser() {
+      setIsLoading(true);
+      const user_data = await getCurrentUser();
+      if (user_data) {
+        setUser(user_data);
+      }
+      setIsLoading(false);
+    }
+    getUser();
+  }, [isActive]);
 
   return (
     <div className="flex flex-row p-4 justify-between items-center gap-2 shadow my-4 rounded">
@@ -46,14 +89,25 @@ const Navbar = () => {
         />
       </form>
 
-      <div className="flex gap-2 justify-center items-center">
-        <button className="p-2 rounded shadow bg-blue-400 text-zinc-200">
-          <Link href={"/auth/login"}>SignIn</Link>
-        </button>
-        <button className="p-2 rounded shadow border-2 border-blue-400 text-stone-900">
-          <Link href="/auth/register">SignUp</Link>
-        </button>
-      </div>
+      {isLoading ? <FaSpinner className="animate-[spin_2s_linear_infinite] inline-block text-xl" /> : isEmpty(user) ? (
+        <div className="flex gap-2 justify-center items-center">
+          <Link
+            href={"/auth/login"}
+            className="p-2 rounded shadow bg-blue-400 text-zinc-200"
+          >
+            SignIn
+          </Link>
+
+          <Link
+            href="/auth/register"
+            className="p-2 rounded shadow border-2 border-blue-400 text-stone-900"
+          >
+            SignUp
+          </Link>
+        </div>
+      ) : (
+        <Avatar email={user.email} image={user.image} callback_fn={handleLogout} />
+      )}
 
       {/* For mobile screen */}
       <div className="hidden"></div>
@@ -61,4 +115,16 @@ const Navbar = () => {
   );
 };
 
+
+const Navbar = ()=> {
+  return (
+    <Suspense>
+      <NavbarComponent />
+    </Suspense>
+  )
+}
+
 export default Navbar;
+
+
+

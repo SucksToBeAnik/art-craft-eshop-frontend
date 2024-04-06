@@ -1,7 +1,7 @@
 "use client";
 
 import SubmitButton from "@/components/submit-button";
-import Input from "@/components/Input";
+import FieldInput from "@/components/fieldInput";
 import * as actions from "@/actions";
 import { useFormState } from "react-dom";
 import FieldError from "@/components/fieldError";
@@ -27,7 +27,7 @@ const Register = () => {
         </h1>
         <div className="flex flex-col gap-2">
           <label htmlFor="fullname">Full name</label>
-          <Input
+          <FieldInput
             name={"fullname"}
             type={"text"}
             placeholder={"Your full name"}
@@ -36,12 +36,12 @@ const Register = () => {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email</label>
-          <Input name={"email"} type={"email"} placeholder={"Your email"} />
+          <FieldInput name={"email"} type={"email"} placeholder={"Your email"} />
           <FieldError error={emailError} />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="password">Password</label>
-          <Input
+          <FieldInput
             name={"password"}
             type={"password"}
             placeholder={"Your password"}
