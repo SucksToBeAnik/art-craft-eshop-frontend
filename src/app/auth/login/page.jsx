@@ -7,6 +7,7 @@ import {useFormState} from "react-dom"
 import FieldError from "@/components/fieldError";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import Link from "next/link";
 
 
 const Login = () => {
@@ -29,10 +30,10 @@ const Login = () => {
   
 
   return (
-    <div className="flex justify-center items-center min-w-screen mt-20">
+    <div className="flex justify-center items-center my-20">
       <form
         action={action}
-        className="flex flex-col gap-2 p-4 rounded shadow-md w-full md:w-2/4"
+        className="flex flex-col gap-2 py-4 px-8 rounded shadow-md w-full md:w-2/4"
       >
         <h1 className="text-4xl text-center font-bold my-4">Login</h1>
 
@@ -52,6 +53,11 @@ const Login = () => {
 
         <SubmitButton name={"Login"} />
         <FieldError error={formData.errors?._form} />
+
+        <div className="flex gap-1 mx-auto text-md">
+          <p>Do not have an account?</p>
+          <p>Create an account <Link href={"/auth/register"} className="border-b-2 border-blue-400 text-blue-400">Here</Link></p>
+        </div>
       </form>
     </div>
   );

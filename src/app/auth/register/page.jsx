@@ -5,6 +5,7 @@ import FieldInput from "@/components/fieldInput";
 import * as actions from "@/actions";
 import { useFormState } from "react-dom";
 import FieldError from "@/components/fieldError";
+import Link from "next/link";
 
 const Register = () => {
   const [formState, action] = useFormState(actions.registerUser, {
@@ -17,10 +18,10 @@ const Register = () => {
   const formError = formState.errors._form?.join(", ");
 
   return (
-    <div className="flex justify-center items-center min-w-screen mt-20">
+    <div className="flex justify-center items-center mt-10 mb-20">
       <form
         action={action}
-        className="flex flex-col gap-2 p-4 rounded shadow-md w-full md:w-2/4"
+        className="flex flex-col gap-2 py-4 px-8 rounded shadow-md w-full md:w-2/4"
       >
         <h1 className="text-4xl text-center font-bold my-4">
           Register Account
@@ -51,6 +52,11 @@ const Register = () => {
 
         <SubmitButton name={"Sign Up"} />
         <FieldError error={formError} />
+
+        <div className="flex gap-1 mx-auto text-md">
+          <p>Already have an account?</p>
+          <p>Login <Link href={"/auth/login"} className="border-b-2 border-blue-400 text-blue-400">Here</Link></p>
+        </div>
       </form>
     </div>
   );

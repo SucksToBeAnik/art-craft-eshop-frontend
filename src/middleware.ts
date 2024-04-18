@@ -1,40 +1,52 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+const protectedRoutes = ["/shops", "/shops/:id"];
+
 export default async function middleware(
   request: NextRequest,
   response: NextResponse
 ) {
-  const token = cookies().get("token");
-  if (token) {
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token.value}`);
-    try {
-      const res = await fetch(
-        `${process.env.API_URL}/auth/me`,
-        {
-          method: "GET",
-          headers: myHeaders,
-          redirect: "follow",
+  for (const path of protectedRoutes) {
+    if (request.nextUrl.pathname.startsWith(path)) {
+      const token = cookies().get("token");
+      if (token) {
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${token.value}`);
+        try {
+          const res = await fetch(`${process.env.API_URL}/auth/me`, {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
+          });
+          if (res.status === 401) {
+            cookies().delete("token");
+            return NextResponse.redirect(
+              request.nextUrl.origin.concat(
+                `/auth/login?redirect=${request.nextUrl.pathname}`
+              )
+            );
+          }
+        } catch (error) {
+          return NextResponse.redirect(
+            request.nextUrl.origin.concat(
+              `/auth/login?redirect=${request.nextUrl.pathname}`
+            )
+          );
         }
-      );
-      if (res.status === 401) {
-        cookies().delete('token')
+      } else {
         return NextResponse.redirect(
-          request.nextUrl.origin.concat(`/auth/login?redirect=${request.nextUrl.pathname}`)
+          request.nextUrl.origin.concat(
+            `/auth/login?redirect=${request.nextUrl.pathname}`
+          )
         );
       }
-    } catch (error) {
-      return request.nextUrl.origin.concat(`/auth/login?redirect=${request.nextUrl.pathname}`)
     }
-  } else {
-    return NextResponse.redirect(
-      request.nextUrl.origin.concat(`/auth/login?redirect=${request.nextUrl.pathname}`)
-    );
   }
-  // end of if
 }
 
+// end of if
+
 export const config = {
-  matcher: ["/shops"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

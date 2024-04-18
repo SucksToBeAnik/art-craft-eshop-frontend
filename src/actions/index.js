@@ -1,1 +1,8 @@
-export { registerUser, getCurrentUser, actionLoginUser, actionLogutUser } from "./auth_action";
+export {
+  registerUser,
+  getCurrentUser,
+  actionLoginUser,
+  actionLogutUser,
+  switchUserType,
+} from "./auth_action";
+export { getShops } from "./shops_action";

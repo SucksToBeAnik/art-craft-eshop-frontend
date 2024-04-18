@@ -153,6 +153,7 @@ export async function getCurrentUser() {
   if (token) {
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token.value}`);
+
     try {
       const res = await fetch(`${process.env.API_URL}/auth/me`, {
         method: "GET",
@@ -177,4 +178,25 @@ export async function getCurrentUser() {
 export async function actionLogutUser() {
   cookies().delete("token");
   redirect("/");
+}
+
+export async function switchUserType(){
+  const token = cookies().get('token')
+  const headers = new Headers()
+  headers.append("Authorization", `Bearer ${token.value}`)
+
+
+  try{
+    const res = await fetch(`${process.env.API_URL}/auth/me/switch`,{
+      method:'PATCH',
+      url:"/auth/me/switch",
+      headers:headers,
+      redirect:"follow"
+    })
+
+    const data = await res.json()
+    if(res.ok) return data
+  }catch(err){
+    console.log(err);
+  }
 }
