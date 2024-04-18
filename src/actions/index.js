@@ -5,4 +5,4 @@ export {
   actionLogutUser,
   switchUserType,
 } from "./auth_action";
-export { getShops } from "./shops_action";
+export { getShops, createShop, getShopById } from "./shops_action";

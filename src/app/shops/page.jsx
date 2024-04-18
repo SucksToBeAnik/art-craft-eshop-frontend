@@ -79,7 +79,7 @@ const ShopsPage = async () => {
           </a>
         </div>
       </div>
-      <div id="shops" className="grid grid-cols-3 gap-4 min-h-screen py-8">
+      <div id="shops" className="grid grid-cols-3 gap-8 min-h-screen py-8">
         {renderedShops}
       </div>
       ;

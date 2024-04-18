@@ -1,13 +1,14 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/shops", "/shops/:id"];
+const protectedRoutes = ["/shops"];
 
 export default async function middleware(
   request: NextRequest,
   response: NextResponse
 ) {
   for (const path of protectedRoutes) {
+    // console.log(request.nextUrl.pathname.startsWith('/shops'));
     if (request.nextUrl.pathname.startsWith(path)) {
       const token = cookies().get("token");
       if (token) {
