@@ -42,7 +42,9 @@ const Avatar = ({ user, callback_fn }) => {
   return (
     <div
       className="h-8 w-8 rounded-full shadow-2xl cursor-pointer relative"
-      onClick={() => setModalOpen((prev) => !prev)}
+      onClick={() => {
+        setModalOpen((prev) => !prev)
+      }}
     >
       <RxAvatar
         className={`w-full h-full ${

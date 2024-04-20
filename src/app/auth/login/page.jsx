@@ -10,11 +10,9 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 
-const Login = () => {
+const LoginPage = () => {
   const searchParams = useSearchParams()
   let redirectUrl = searchParams.get('redirect')
-
-  console.log('redirect url: ',redirectUrl);
 
   if(redirectUrl !== undefined && redirectUrl !== null){
     redirectUrl = redirectUrl.concat('?active=true')
@@ -25,6 +23,8 @@ const Login = () => {
   const [formData, action] = useFormState(actionLoginUser.bind(null, redirectUrl),{
     errors:{}
   })
+
+
 
   
 
@@ -63,13 +63,13 @@ const Login = () => {
 };
 
 
-const LoginPage = ()=> {
-  return (
-    <Suspense>
-      <Login />
-    </Suspense>
-  )
-}
+// const LoginPage = ()=> {
+//   return (
+//     <Suspense>
+//       <Login />
+//     </Suspense>
+//   )
+// }
 
 export default LoginPage;
 

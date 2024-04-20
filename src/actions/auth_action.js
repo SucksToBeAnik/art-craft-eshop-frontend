@@ -77,12 +77,6 @@ export async function registerUser(formState, formData) {
           },
         };
       }
-
-      return {
-        errors: {
-          _form: ["Something went wrong"],
-        },
-      };
     } else {
       return {
         errors: {
@@ -101,6 +95,7 @@ export async function registerUser(formState, formData) {
 export async function actionLoginUser(redirectUrl,formState, formData) {
   const email = formData.get("email");
   const password = formData.get("password");
+
 
   try {
     const response = await axios.postForm("/auth/login", {
@@ -126,12 +121,6 @@ export async function actionLoginUser(redirectUrl,formState, formData) {
           },
         };
       }
-
-      return {
-        errors: {
-          _form: ["Something went wrong"],
-        },
-      };
     } else {
       return {
         errors: {
