@@ -79,7 +79,6 @@ const ShopPage = ({ params }) => {
 };
 
 const ShopProduct = ({ product }) => {
-  console.log(product);
   return (
     <div className="shadow-xl rounded-xl col-span-1 p-4">
       <div className="flex justify-between items-center mb-4">

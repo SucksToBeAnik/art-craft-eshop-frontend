@@ -53,10 +53,10 @@ const Avatar = ({ user, callback_fn }) => {
       {modalOpen &&
         (isEmpty(user) ? (
           <div className="absolute left-1/2 -translate-x-1/2 p-3 rounded mt-6 border-2 z-20 bg-gray-100 shadow-md space-y-4 cursor-default">
-            <div className="flex gap-2 items-center justify-center border-2 border-blue-400 cursor-pointer rounded p-2">
+            <Link href={"/auth/login"} className="flex gap-2 items-center justify-center border-2 border-blue-400 cursor-pointer rounded p-2">
               <FaSignInAlt className="text-xl" />
-              <Link href={"/auth/login"}>SiginIn</Link>
-            </div>
+              <span>SiginIn</span>
+            </Link>
           </div>
         ) : (
           <div className="absolute left-1/2 -translate-x-1/2 p-3 rounded mt-6 border-2 z-20 bg-gray-100 shadow-md space-y-4 cursor-default">

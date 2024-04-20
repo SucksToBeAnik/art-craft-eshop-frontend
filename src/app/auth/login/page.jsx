@@ -14,9 +14,9 @@ const Login = () => {
   const searchParams = useSearchParams()
   let redirectUrl = searchParams.get('redirect')
 
-  console.log(redirectUrl);
+  console.log('redirect url: ',redirectUrl);
 
-  if(redirectUrl){
+  if(redirectUrl !== undefined && redirectUrl !== null){
     redirectUrl = redirectUrl.concat('?active=true')
   }else{
     redirectUrl = "/?active=true"
