@@ -22,8 +22,7 @@ const Login = () => {
     redirectUrl = "/?active=true"
   }
 
-  const [formData, action] = useFormState(actionLoginUser,{
-    redirect: redirectUrl,
+  const [formData, action] = useFormState(actionLoginUser.bind(null, redirectUrl),{
     errors:{}
   })
 

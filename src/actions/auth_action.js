@@ -95,8 +95,10 @@ export async function registerUser(formState, formData) {
   redirect("/auth/login");
 }
 
+
+
 // login action
-export async function actionLoginUser(formState, formData) {
+export async function actionLoginUser(redirectUrl,formState, formData) {
   const email = formData.get("email");
   const password = formData.get("password");
 
@@ -117,8 +119,6 @@ export async function actionLoginUser(formState, formData) {
     }
   } catch (err) {
     if (err instanceof AxiosError) {
-      
-
       if (err.response?.data?.detail) {
         return {
           errors: {
@@ -141,7 +141,8 @@ export async function actionLoginUser(formState, formData) {
     }
   }
 
-  redirect(formState.redirect);
+
+  redirect(redirectUrl);
 }
 
 
