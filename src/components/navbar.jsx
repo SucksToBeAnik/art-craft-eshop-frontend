@@ -86,7 +86,7 @@ const NavbarComponent = () => {
       </form>
 
       {isLoading ? (
-        <FaSpinner className="animate-[spin_2s_linear_infinite] inline-block text-xl" />
+        <FaSpinner className="animate-[spin_2s_linear_infinite] inline-block text-xl w-8" />
       ) : (
         <Avatar user={user} callback_fn={handleLogout} />
       )}

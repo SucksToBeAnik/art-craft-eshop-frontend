@@ -9,7 +9,7 @@ const SubmitButton = ({ name }) => {
   return (
     <button
       type="submit"
-      className="p-2 my-4 rounded shadow border-2 border-blue-400 text-black"
+      className="p-2 my-3 rounded shadow border-2 border-blue-400 text-black"
     >
       <span className="pr-2">{name}</span>
       {pending && <FaSpinner className="animate-[spin_2s_linear_infinite] inline-block text-xl" />}

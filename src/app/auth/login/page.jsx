@@ -24,10 +24,6 @@ const LoginPage = () => {
     errors:{}
   })
 
-
-
-  
-
   return (
     <div className="flex justify-center items-center my-20">
       <form
@@ -51,7 +47,7 @@ const LoginPage = () => {
         </div>
 
         <SubmitButton name={"Login"} />
-        <FieldError error={formData.errors?._form} />
+        <FieldError error={formData?.errors?._form} />
 
         <div className="flex gap-1 mx-auto text-md">
           <p>Do not have an account?</p>

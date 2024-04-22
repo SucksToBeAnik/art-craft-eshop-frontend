@@ -20,18 +20,20 @@ export async function getShops() {
   }
 }
 
-export async function getShopById(id){
-    try{
-        const res = await fetch(`${process.env.API_URL}/shops/${id}`,{
-            method:"GET"
-        })
+export async function getShopById(id) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/shops/${id}`, {
+      method: "GET",
+    });
 
-        const data = await res.json()
+    if (!res.ok) return null;
 
-        return data
-    }catch(err){
-        console.log(err);
-    }
+    const data = await res.json();
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function createShop(formState, formData) {
@@ -46,7 +48,6 @@ export async function createShop(formState, formData) {
   }
 
   let data;
-
 
   try {
     const res = await fetch(`${process.env.API_URL}/shops/new`, {
@@ -63,14 +64,13 @@ export async function createShop(formState, formData) {
 
     data = await res.json();
 
-    if (res.status !== 201){
-        return {
-          errors: {
-            _form: [data.detail[0].msg],
-          },
-        };
+    if (res.status !== 201) {
+      return {
+        errors: {
+          _form: [data.detail[0].msg],
+        },
+      };
     }
-
   } catch (err) {
     return {
       errors: {
@@ -80,5 +80,4 @@ export async function createShop(formState, formData) {
   }
 
   redirect(`/shops/${data.shop_id}`);
-
 }

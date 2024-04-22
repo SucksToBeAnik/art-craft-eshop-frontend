@@ -1,3 +1,6 @@
+'use client'
+import { actionGetFeaturedProducts } from "@/actions";
+
 const ProductsPage = ()=> {
     return (
         <div>
