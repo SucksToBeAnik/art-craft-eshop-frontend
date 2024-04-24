@@ -41,14 +41,33 @@ export async function actionCreateProduct(shopId, formState, formData) {
   redirect(`/products`);
 }
 
+export async function actionGetSingleProduct(id) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/products/${id}/`);
+
+    if (!res.ok) throw new Error(res.statusText);
+    const data = await res.json();
+    return {
+      data,
+      error: null
+    }
+  } catch (error) {
+    return {
+      data:null,
+      error: error.toString()
+    }
+  }
+}
+
 export async function actionGetFeaturedProducts() {
   try {
-    const res = await fetch(`${process.env.API_URL}/products/featured/all?}`,{method:'GET'});
+    const res = await fetch(`${process.env.API_URL}/products/featured/all?}`, {
+      method: "GET",
+    });
 
     if (!res.ok) throw new Error("Something went wrong");
 
     const data = await res.json();
-
 
     return {
       data,

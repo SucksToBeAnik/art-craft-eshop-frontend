@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { actionLogutUser } from "@/actions";
 import { FaSpinner } from "react-icons/fa";
 import { Suspense } from "react";
+import SearchBar from "./searchBar";
 
 const navLinks = {
   Shops: "/shops",
@@ -74,16 +75,9 @@ const NavbarComponent = () => {
         {renderedNavLinks}
       </div>
 
-      <form className="flex justify-center items-center gap-2 -translate-x-24">
-        <button type="submit" className="text-2xl">
-          <CiSearch />
-        </button>
-        <input
-          type="text"
-          className="rounded focus:outline-none p-2 shadow"
-          placeholder="Search shops, products..."
-        />
-      </form>
+      <Suspense>
+        <SearchBar />
+      </Suspense>
 
       {isLoading ? (
         <FaSpinner className="animate-[spin_2s_linear_infinite] inline-block text-xl w-8" />
