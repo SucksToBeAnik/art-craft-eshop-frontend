@@ -41,22 +41,22 @@ export async function actionCreateProduct(shopId, formState, formData) {
   redirect(`/products`);
 }
 
-export async function actionGetFeaturedProducts(page, formState) {
-  let skip;
-  page === 1 ? (skip = 0) : (skip = page * 5);
+export async function actionGetFeaturedProducts() {
   try {
-    const res = await fetch(
-      `${process.env.API_URL}/shops?limit=5&skip=${skip}`
-    );
+    const res = await fetch(`${process.env.API_URL}/products/featured/all?}`,{method:'GET'});
 
     if (!res.ok) throw new Error("Something went wrong");
 
     const data = await res.json();
 
-    console.log(data);
+
+    return {
+      data,
+      error: null,
+    };
   } catch (error) {
     return {
-      data: [],
+      data: null,
       error: error.toString(),
     };
   }
