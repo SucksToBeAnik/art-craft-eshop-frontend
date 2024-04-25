@@ -36,6 +36,32 @@ export async function getShopById(id) {
   }
 }
 
+export async function actionGetShopsByOwnerId(owner_id){
+  const token = cookies().get("token");
+  const header = new Headers();
+  header.append("Authorization", `Bearer ${token.value}`);
+
+  try{
+    const res = await fetch(`${process.env.API_URL}/shops/owner/${owner_id}`, {
+      method:'GET',
+      headers: header
+    })
+    if(!res.ok) throw new Error(res.statusText)
+
+    const data = await res.json()
+    return {
+      data,
+      error: null
+    }
+  }catch(error){
+    console.log(error);
+    return {
+      data: null,
+      error: error.toString()
+    }
+  }
+}
+
 export async function createShop(formState, formData) {
   const token = cookies().get("token");
   const header = new Headers();
@@ -80,4 +106,22 @@ export async function createShop(formState, formData) {
   }
 
   redirect(`/shops/${data.shop_id}`);
+}
+
+
+export async function actionDeleteShopById(shop_id){
+  const token = cookies().get("token");
+  const header = new Headers();
+  header.append("Authorization", `Bearer ${token.value}`);
+  try {
+    const res =  await fetch(`${process.env.API_URL}/shops/${shop_id}`,{
+      method:"DELETE",
+      headers: header
+    })
+    if(!res.ok) return false
+
+    return true
+  } catch (error) {
+    return false
+  }
 }

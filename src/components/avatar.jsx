@@ -10,6 +10,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import Link from "next/link";
 import { CiCircleCheck } from "react-icons/ci";
 import { switchUserType } from "@/actions";
+import { MdOutlineDashboard } from "react-icons/md";
 
 function isEmpty(obj) {
   for (let key in obj) {
@@ -22,28 +23,26 @@ function isEmpty(obj) {
 
 const Avatar = ({ user, callback_fn }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [userType, setUserType] = useState(null)
+  const [userType, setUserType] = useState(null);
 
-
-  useEffect(()=>{
-    if(isEmpty(user)){
-      setUserType(null)
-    }else{
-      setUserType(user.user_type)
+  useEffect(() => {
+    if (isEmpty(user)) {
+      setUserType(null);
+    } else {
+      setUserType(user.user_type);
     }
-  },[user])
+  }, [user]);
 
-
-  async function handleSwitch(){
-    const switchedType = await switchUserType()
-    if(switchedType) setUserType(switchedType)
+  async function handleSwitch() {
+    const switchedType = await switchUserType();
+    if (switchedType) setUserType(switchedType);
   }
 
   return (
     <div
       className="h-8 w-8 rounded-full shadow-2xl cursor-pointer relative"
       onClick={() => {
-        setModalOpen((prev) => !prev)
+        setModalOpen((prev) => !prev);
       }}
     >
       <RxAvatar
@@ -55,7 +54,10 @@ const Avatar = ({ user, callback_fn }) => {
       {modalOpen &&
         (isEmpty(user) ? (
           <div className="absolute left-1/2 -translate-x-1/2 p-3 rounded mt-6 border-2 z-20 bg-gray-100 shadow-md space-y-4 cursor-default">
-            <Link href={"/auth/login"} className="flex gap-2 items-center justify-center border-2 border-blue-400 cursor-pointer rounded p-2">
+            <Link
+              href={"/auth/login"}
+              className="flex gap-2 items-center justify-center border-2 border-blue-400 cursor-pointer rounded p-2"
+            >
               <FaSignInAlt className="text-xl" />
               <span>SiginIn</span>
             </Link>
@@ -65,11 +67,21 @@ const Avatar = ({ user, callback_fn }) => {
             <div className="flex gap-2 items-center justify-start">
               <CiCircleCheck className="text-xl text-emerald-600" />
               <p className="text-emerald-600">{userType}</p>
-              <AiOutlineUserSwitch onClick={handleSwitch} className="ml-auto border-2 rounded-full p-1 w-8 h-8 shadow cursor-pointer" />
+              <AiOutlineUserSwitch
+                onClick={handleSwitch}
+                className="ml-auto border-2 rounded-full p-1 w-8 h-8 shadow cursor-pointer"
+              />
             </div>
-            <div className="flex gap-2 items-center justify-start">
-              <RiCoinsLine className="text-xl" />
-              <p>{user.balance}</p>
+
+            <div className="flex justify-between items-center">
+              <Link href={"/dashboard"} className="flex gap-2 justify-center items-center text-emerald-600 border-b-2 border-b-emerald-600">
+                <MdOutlineDashboard />
+                <span>Dashboard</span>
+              </Link>
+              <div className="flex gap-2 items-center justify-start">
+                <RiCoinsLine className="text-xl" />
+                <p>{user.balance}</p>
+              </div>
             </div>
 
             <div className="flex gap-2 items-center justify-start">

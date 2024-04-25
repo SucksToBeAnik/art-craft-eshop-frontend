@@ -185,7 +185,9 @@ export async function switchUserType(){
     })
 
     const data = await res.json()
-    if(res.ok) return data
+    if(res.ok){
+      return data
+    }
   }catch(err){
     console.log(err);
   }

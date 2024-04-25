@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const protectedRoutes = ["/shops","/products","/search"];
+const protectedRoutes = ["/shops","/products","/search","/dashboard"];
 
 export default async function middleware(
   request: NextRequest,

@@ -81,6 +81,28 @@ export async function actionGetFeaturedProducts() {
   }
 }
 
+export async function actionGetFavouriteAndBoughtProducts(ownerId){
+
+  try {
+    const res = await fetch(`${process.env.API_URL}/products/owner/details/${ownerId}`)
+    if(!res.ok) throw new Error(res.statusText)
+
+    const data = await res.json()
+
+    return {
+      data,
+      error: null
+    }
+  } catch (error) {
+
+    return {
+      data: null,
+      error: error.toString()
+    }
+  }
+
+}
+
 export async function actionDeleteProduct(id) {
   try {
     const user = await getCurrentUser();
