@@ -1,20 +1,20 @@
 "use client";
-import { useState } from "react";
+
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-const Toast = ({ message }) => {
-  const [showToast, setShowToast] = useState(true);
+const Toast = ({ message, type, toggleShowToast }) => {
 
   return (
     <>
-      {showToast ? (
-        <div className="absolute bottom-0 right-0">
-          <div className="flex justify-between p-2 rounded shadow bg-blue-400 text-white">
-            <p>{message}</p>
-            <IoCloseCircleOutline onClick={()=>setShowToast(prev=>!prev)} className="inline-block absolute" />
-          </div>
+      
+        <div className={`p-2 rounded text-sm shadow text-white ${type === 'error' && 'bg-red-400'} ${type === 'success'  && 'bg-emerald-500'} w-full`}>
+          <p className="p-2 pr-4">{message}</p>
+          <IoCloseCircleOutline
+            onClick={toggleShowToast}
+            className="inline-block absolute right-0 top-0 text-2xl cursor-pointer"
+          />
         </div>
-      ) : null}
+      
     </>
   );
 };

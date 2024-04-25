@@ -38,7 +38,7 @@ const SellerDashboard = ({ userId }) => {
     <>
       {shops.length ? (
         <div>
-          <h1 className="text-xl font-bold mb-4">
+          <h1 className="font-bold text-md mb-4">
             You own {shops.length} shops
           </h1>
           <div className="grid grid-cols-4 gap-4">
@@ -76,7 +76,7 @@ const SellerShop = ({ shop, onDeleteShop, deletePending }) => {
 
   return (
     <div className="col-span-1 bg-blue-100 rounded shadow py-2 px-4 relative">
-      <h1 className="text-lg font-semibold mb-2">{shop.name}</h1>
+      <h1 className="font-semibold mb-2 text-md">{shop.name}</h1>
       <div className="flex justify-between items-center">
         <Link
           className="border border-blue-400 p-1 rounded flex justify-center items-center gap-1"

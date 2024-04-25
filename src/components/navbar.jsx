@@ -17,6 +17,7 @@ import SearchBar from "./searchBar";
 const navLinks = {
   Shops: "/shops",
   Products: "/products",
+  Dashboard:"/dashboard"
 };
 
 const NavbarComponent = () => {

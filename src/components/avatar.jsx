@@ -64,24 +64,21 @@ const Avatar = ({ user, callback_fn }) => {
           </div>
         ) : (
           <div className="absolute left-1/2 -translate-x-1/2 p-3 rounded mt-6 border-2 z-20 bg-gray-100 shadow-md space-y-4 cursor-default">
-            <div className="flex gap-2 items-center justify-start">
-              <CiCircleCheck className="text-xl text-emerald-600" />
-              <p className="text-emerald-600">{userType}</p>
+            <div className="flex gap-2 items-center justify-between text-sm">
+              <div className="flex gap-1 items-center justify-start mr-2">
+                <CiCircleCheck className="text-xl text-emerald-600" />
+                <p className="text-emerald-600">{userType}</p>
+              </div>
+
+              <div className="flex gap-1 items-center justify-start">
+                <RiCoinsLine className="text-xl" />
+                <p>{user.balance}</p>
+              </div>
+
               <AiOutlineUserSwitch
                 onClick={handleSwitch}
                 className="ml-auto border-2 rounded-full p-1 w-8 h-8 shadow cursor-pointer"
               />
-            </div>
-
-            <div className="flex justify-between items-center">
-              <Link href={"/dashboard"} className="flex gap-2 justify-center items-center text-emerald-600 border-b-2 border-b-emerald-600">
-                <MdOutlineDashboard />
-                <span>Dashboard</span>
-              </Link>
-              <div className="flex gap-2 items-center justify-start">
-                <RiCoinsLine className="text-xl" />
-                <p>{user.balance}</p>
-              </div>
             </div>
 
             <div className="flex gap-2 items-center justify-start">

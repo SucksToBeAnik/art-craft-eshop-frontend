@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { actionGetFavouriteAndBoughtProducts } from "@/actions";
 import Link from "next/link";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { FaRegPaperPlane } from "react-icons/fa";
+import { CiShoppingCart } from "react-icons/ci";
+
 
 const CustomerDashboard = ({ userId }) => {
   const [userDetails, setUserDetails] = useState(null);
@@ -76,8 +77,8 @@ const CustomerDashboard = ({ userId }) => {
 
                       <div className="flex justify-center items-center gap-4">
                         <div className="flex justify-center items-center gap-1 border-b-2 border-b-blue-400 cursor-pointer">
-                          <FaRegPaperPlane />
-                          <button className="">Order</button>
+                          <CiShoppingCart />
+                          <Link href={`/carts/${cart.cart_id}`} className="">View Cart</Link>
                         </div>
                         <div className="flex justify-center items-center gap-1 border-b-2 border-b-blue-400 cursor-pointer">
                           <FaRegTrashCan />

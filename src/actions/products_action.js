@@ -3,8 +3,10 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "./auth_action";
+import { data } from "autoprefixer";
 
 export async function actionCreateProduct(shopId, formState, formData) {
+  let productId;
   try {
     const token = cookies().get("token");
     const header = new Headers();
@@ -29,6 +31,8 @@ export async function actionCreateProduct(shopId, formState, formData) {
     if (!res.ok) {
       throw new Error(data?.detail[0]?.msg);
     }
+
+    productId = data.product_id
   } catch (error) {
     return {
       errors: {
@@ -37,8 +41,9 @@ export async function actionCreateProduct(shopId, formState, formData) {
     };
   }
 
+
   revalidatePath(`/shops/${shopId}`, "page");
-  redirect(`/products`);
+  redirect(`/products/${productId}`);
 }
 
 export async function actionGetSingleProduct(id) {
@@ -49,13 +54,13 @@ export async function actionGetSingleProduct(id) {
     const data = await res.json();
     return {
       data,
-      error: null
-    }
+      error: null,
+    };
   } catch (error) {
     return {
-      data:null,
-      error: error.toString()
-    }
+      data: null,
+      error: error.toString(),
+    };
   }
 }
 
@@ -81,26 +86,25 @@ export async function actionGetFeaturedProducts() {
   }
 }
 
-export async function actionGetFavouriteAndBoughtProducts(ownerId){
-
+export async function actionGetFavouriteAndBoughtProducts(ownerId) {
   try {
-    const res = await fetch(`${process.env.API_URL}/products/owner/details/${ownerId}`)
-    if(!res.ok) throw new Error(res.statusText)
+    const res = await fetch(
+      `${process.env.API_URL}/products/owner/details/${ownerId}`
+    );
+    if (!res.ok) throw new Error(res.statusText);
 
-    const data = await res.json()
+    const data = await res.json();
 
     return {
       data,
-      error: null
-    }
+      error: null,
+    };
   } catch (error) {
-
     return {
       data: null,
-      error: error.toString()
-    }
+      error: error.toString(),
+    };
   }
-
 }
 
 export async function actionDeleteProduct(id) {
@@ -126,5 +130,33 @@ export async function actionDeleteProduct(id) {
     }
   } catch (error) {
     return false;
+  }
+}
+
+export async function actionAddProductToFavourites(product_id) {
+  try {
+    const token = cookies().get("token");
+    const header = new Headers();
+    header.append("Authorization", `Bearer ${token.value}`);
+
+    const res = await fetch(
+      `${process.env.API_URL}/products/favourites/${product_id}`,
+      {
+        method: "PATCH",
+        headers: header,
+      }
+    );
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.detail[0].msg);
+    return {
+      data: "Added to Favourites",
+      error: null
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: error.toString()
+    }
   }
 }

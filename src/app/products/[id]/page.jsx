@@ -3,12 +3,23 @@
 import { useEffect, useState } from "react";
 import { actionGetSingleProduct } from "@/actions";
 import { RiCoinsLine } from "react-icons/ri";
+import { CiStar } from "react-icons/ci";
+import { CiShoppingCart } from "react-icons/ci";
+import { actionAddProductToFavourites } from "@/actions";
+import Toast from "@/components/toast";
+import Cart from "@/components/cart";
+
 import Image from "next/image";
 
 const SingleProductPage = ({ params }) => {
   const [product, setProduct] = useState({});
   const [pending, setPending] = useState(true);
   const [productFound, setProductFound] = useState(true);
+  const [showCart, setShowCart] = useState(false)
+  
+  const [toast, setToast] = useState(null)
+
+
 
   useEffect(() => {
     async function getProduct() {
@@ -24,6 +35,22 @@ const SingleProductPage = ({ params }) => {
     getProduct();
   }, [params.id]);
 
+  async function handleAddFavourite(){
+    const res = await actionAddProductToFavourites(params.id)
+    if(res.data){
+      setToast(prev=>{
+        return {...prev,message:res.data, type:'success'}
+      })
+    }
+    if(res.error){
+      setToast(prev=>{
+        return {...prev,message:res.error, type:'error'}
+      })
+    }
+  }
+
+  
+
   return (
     <>
       {pending ? (
@@ -31,7 +58,7 @@ const SingleProductPage = ({ params }) => {
       ) : (
         <>
           {productFound ? (
-            <div className="w-3/4 mx-auto border rounded p-4">
+            <div className="w-3/5 mx-auto rounded p-4 shadow-xl min-h-full">
               <div className="flex justify-between items-center mb-8">
                 <h1 className="text-center text-3xl font-bold">
                   {product?.name}
@@ -48,25 +75,33 @@ const SingleProductPage = ({ params }) => {
                 </div>
               </div>
 
-              <div className="flex justify-center items-start gap-4 mb-8">
+              <div className="flex justify-between items-start gap-4 mb-8">
                 <Image
                   src={"/painting.jpg"}
                   alt="Product Image"
-                  width={500}
-                  height={500}
-                  className="shadow rounded"
+                  width={400}
+                  height={400}
+                  className=""
                 />
-                <p className="text-xl">{product.description}</p>
+                <p className="">{product.description || "This product has no description"}</p>
               </div>
 
-              <div className="flex justify-between items-center w-3/4 mx-auto">
-                <button className="border-2 border-blue-400 p-2 rounded shadow">
-                  Add to Favourite
-                </button>
-                <button className="border-2 border-blue-400 p-2 rounded shadow">
-                  Add to Cart
-                </button>
+              <div className="flex justify-between items-center w-3/4 mx-auto mb-8 relative">
+                <div onClick={handleAddFavourite} className="border-2 cursor-pointer border-blue-400 p-2 rounded shadow flex justify-center items-center gap-2">
+                  <CiStar />
+                  <span>Add to Favourite</span>
+                </div>
+                <div onClick={()=>setShowCart(true)} className="border-2 cursor-pointer border-blue-400 p-2 rounded shadow flex justify-center items-center gap-2">
+                  <CiShoppingCart />
+                  <span>Add to Cart</span>
+                </div>
+
+                {showCart && <div className="absolute -right-[465px] -top-[415px]">{<Cart productId={params.id} onShowCart={setShowCart} />}</div>}
+
+
               </div>
+
+              {toast && <div className="absolute bottom-2 right-2"><Toast toggleShowToast={()=>setToast(null)} type={toast.type} message={toast.message} /></div>}
             </div>
           ) : (
             <p>There is no such Product</p>
