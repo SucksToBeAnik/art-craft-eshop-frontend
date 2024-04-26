@@ -143,20 +143,29 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
     onDeleteProduct();
   }
 
-  useEffect(()=>{
-    if(!pending){
-      setShowDeleteConfirm(false)
+  useEffect(() => {
+    if (!pending) {
+      setShowDeleteConfirm(false);
     }
-  },[pending])
+  }, [pending]);
 
   return (
     <div className="shadow-xl rounded-xl col-span-1 p-4 border">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl">{product.name}</h1>
+      <div className="flex justify-between items-center mb-1">
+        <h1 className="text-xl font-semibold">{product.name}</h1>
+
         <div className="flex justify-center items-center gap-1 bg-blue-400 rounded p-1 text-white">
-          <RiCoinsLine className="text-xl" />
+          <RiCoinsLine className="text-sm" />
           <p>{product.price}</p>
         </div>
+      </div>
+      <div className="flex justify-start items-center gap-2 mb-4">
+        <span className="bg-blue-200 rounded text-xs p-1">
+          {product.product_type}
+        </span>
+        <p>
+          By <span className="italic">{product.manufacturer}</span>
+        </p>
       </div>
 
       <Image
@@ -166,16 +175,7 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
         width={400}
       />
 
-      <div className="rounded shadow bg-blue-400 text-white p-4 pt-8">
-        <span className="bg-white text-blue-400 p-2 rounded shadow mr-4">
-          {product.product_type}
-        </span>
-        <span className="bg-white text-blue-400 p-2 rounded shadow">
-          {product.available ? "AVAILABLE" : "NOT AVAILABLE"}
-        </span>
-
-        <p className="mt-6 mb-2 min-h-24">{product.description}</p>
-      </div>
+      <p className="my-4 pl-5 border-l-2">{product.description || "This product has no description"}</p>
 
       <div className="flex justify-between items-center mt-8 relative">
         <Link
@@ -185,10 +185,9 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
           DETAILS
         </Link>
 
-        <div className="flex justify-center items-center gap-1 p-2 border-b-2 border-blue-400 cursor-pointer">
-          <CiShoppingCart className="text-xl" />
-          <button>Add To Cart</button>
-        </div>
+        <span className="bg-white text-blue-400 p-2 rounded shadow">
+            {product.available ? "AVAILABLE" : "NOT AVAILABLE"}
+          </span>
         <FaRegTrashCan
           onClick={handleShowDeleteConfirm}
           className="inline-block absolute rounded-full p-2 text-4xl cursor-pointer bg-blue-400 text-white font-bold border-2 left-1/2 -translate-x-8 bottom-0"
@@ -197,7 +196,10 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
         {showDeleteConfirm && (
           <div className="absolute p-2 rounded shadow bg-red-400 text-white bottom-12 left-4 z-20 space-y-2">
             <p>Are you sure you want to delete this product?</p>
-            <div onClick={handleDelete} className="flex gap-2 justify-center items-center bg-white p-1 rounded text-sm text-red-400 w-full cursor-pointer">
+            <div
+              onClick={handleDelete}
+              className="flex gap-2 justify-center items-center bg-white p-1 rounded text-sm text-red-400 w-full cursor-pointer"
+            >
               <button>Confirm</button>
               {pending && <FaSpinner className="animate-spin" />}
             </div>

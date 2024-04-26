@@ -8,16 +8,16 @@ import Image from "next/image";
 const ShopsPage = async () => {
   const shops = await getShops();
 
-  let renderedShops = null;
+  let renderedShops = null
 
   if (shops) {
     renderedShops = shops.map((shop) => {
       return (
         <div
           key={shop.shop_id}
-          className="rounded shadow-md col-span-1 p-4 bg-blue-400 text-white flex flex-col"
+          className="rounded shadow-md col-span-1 p-4 bg-blue-500 text-white flex flex-col"
         >
-          <div className="flex-1">
+          <div className="h-full">
             <div className="flex justify-between items-center gap-2">
               <h1 className="text-2xl font-semibold text-center uppercase">
                 {shop.name}
@@ -40,21 +40,21 @@ const ShopsPage = async () => {
               alt="Shop Image"
             />
 
-            <p className="text-lg">
+            <p className="text-md font-semibold line-clamp-3 pl-2 border-l-2">
               {shop.description
                 ? shop.description
                 : "This shop has no description"}
             </p>
 
             {shop.location && (
-              <p className="text-md">
+              <p className="text-sm pl-2 border-l-2">
                 You can find us at
                 <span className="font-semibold"> {shop.location}</span>{" "}
               </p>
             )}
           </div>
 
-          <div className="flex justify-center items-center mt-4">
+          <div className="flex justify-center items-center mt-1">
             <Link
               href={`/shops/${shop.shop_id}`}
               className="bg-white text-black rounded-md shadow-md p-2 inline-block w-full text-center text-md font-semibold"
@@ -88,10 +88,9 @@ const ShopsPage = async () => {
           </a>
         </div>
       </div>
-      <div id="shops" className="grid grid-cols-3 gap-8 min-h-screen py-8">
+      <div id="shops" className="grid grid-cols-3 gap-8 min-h-[550px] py-8">
         {renderedShops}
       </div>
-      ;
     </div>
   );
 };

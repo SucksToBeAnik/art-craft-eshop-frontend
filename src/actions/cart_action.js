@@ -82,3 +82,58 @@ export async function actionAddProductToCart(cartId, productId) {
     }
   }
 }
+
+export async function actionCreateCart(){
+  try {
+    const token = cookies().get("token");
+    const header = new Headers();
+    header.append("Authorization", `Bearer ${token.value}`);
+
+    const res = await fetch(`${process.env.API_URL}/carts/new`,{
+        method:"POST",
+        headers:header
+    })
+    const data = await res.json()
+
+    if(!res.ok) throw new Error(data.detail[0].msg)
+
+    return {
+      data,
+      error: null
+    }
+  } catch (error) {
+    return {
+      data:null,
+      error: error.toString()
+    }
+  }
+}
+
+
+export async function actionDeleteCartById(cartId){
+  try {
+    const token = cookies().get("token");
+    const header = new Headers();
+    header.append("Authorization", `Bearer ${token.value}`);
+
+    const res = await fetch(`${process.env.API_URL}/carts/${cartId}`,{
+        method:"DELETE",
+        headers:header
+    })
+
+    if(!res.ok) {
+      const data= await res.json()
+      throw new Error(data.detail[0].msg)
+    }
+
+    return {
+      data:'Cart Deleted',
+      error: null
+    }
+  } catch (error) {
+    return {
+      data:null,
+      error: error.toString()
+    }
+  }
+}

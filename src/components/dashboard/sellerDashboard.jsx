@@ -9,7 +9,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { FaSpinner } from "react-icons/fa6";
 
 const SellerDashboard = ({ userId }) => {
-  const [shops, setShops] = useState([]);
+  const [shops, setShops] = useState();
   const [deletePending, setDeletePending] = useState(false);
 
   async function handleDeleteShop(shopId) {
@@ -21,7 +21,7 @@ const SellerDashboard = ({ userId }) => {
       });
     }
 
-    setDeletePending(false)
+    setDeletePending(false);
   }
 
   useEffect(() => {
@@ -36,26 +36,35 @@ const SellerDashboard = ({ userId }) => {
 
   return (
     <>
-      {shops.length ? (
-        <div>
-          <h1 className="font-bold text-md mb-4">
-            You own {shops.length} shops
-          </h1>
-          <div className="grid grid-cols-4 gap-4">
-            {shops.map((shop, idx) => {
-              return (
-                <SellerShop
-                  key={idx}
-                  deletePending={deletePending}
-                  onDeleteShop={() => handleDeleteShop(shop.shop_id)}
-                  shop={shop}
-                />
-              );
-            })}
-          </div>
-        </div>
+      {!shops ? (
+        <p>Laoding...</p>
       ) : (
-        <h1>Loading...</h1>
+        <>
+          {shops.length ? (
+            <div>
+              <h1 className="font-bold text-md mb-4">
+                You own {shops.length} shops
+              </h1>
+              <div className="grid grid-cols-5 gap-4">
+                {shops.map((shop, idx) => {
+                  return (
+                    <SellerShop
+                      key={idx}
+                      deletePending={deletePending}
+                      onDeleteShop={() => handleDeleteShop(shop.shop_id)}
+                      shop={shop}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <div>
+            <h1 className="text-md font-semibold mb-2">You do not own any shops</h1>
+            <Link href={"/shops"} className="border-b-2 border-b-black">Go to Shops</Link>
+            </div>
+          )}
+        </>
       )}
     </>
   );
@@ -75,19 +84,20 @@ const SellerShop = ({ shop, onDeleteShop, deletePending }) => {
   }, [deletePending]);
 
   return (
-    <div className="col-span-1 bg-blue-100 rounded shadow py-2 px-4 relative">
-      <h1 className="font-semibold mb-2 text-md">{shop.name}</h1>
-      <div className="flex justify-between items-center">
+    <div className="col-span-1 rounded border p-4 relative">
+      <h1 className="font-semibold mb-4 text-md">{shop.name}</h1>
+      <div className="flex justify-between items-center text-sm">
         <Link
-          className="border border-blue-400 p-1 rounded flex justify-center items-center gap-1"
+          className="border-b-2 border-b-black flex justify-center items-center gap-1"
           href={`/shops/${shop.shop_id}`}
         >
           <FaRegEye />
           Visit
         </Link>
+
         <button
           onClick={handleShowDelete}
-          className="flex justify-center items-center gap-1 border border-red-400 p-1 rounded"
+          className="flex justify-center items-center gap-1 border-b-2 border-b-black text-sm"
         >
           <FaRegTrashCan />
           Delete
@@ -101,7 +111,7 @@ const SellerShop = ({ shop, onDeleteShop, deletePending }) => {
           </p>
           <div
             onClick={onDeleteShop}
-            className="rounded border-2 py-1 px-2 text-sm border-white mx-auto w-20 flex justify-center items-center gap-1 cursor-pointer"
+            className="rounded border-2 py-1 px-2 text-sm border-white mx-auto w-28 flex justify-center items-center gap-1 cursor-pointer"
           >
             <span>Confirm</span>
             {deletePending && <FaSpinner className="animate-spin text-xl" />}
