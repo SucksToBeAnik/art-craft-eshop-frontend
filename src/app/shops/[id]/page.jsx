@@ -59,7 +59,8 @@ const ShopPage = ({ params }) => {
         <p>Loading...</p>
       ) : (
         <div className="p-4">
-          <h1 className="text-4xl text-center">Welcome to {shop?.name}</h1>
+          <h1 className="text-3xl text-center font-bold mb-2">Welcome to {shop?.name}</h1>
+          <h3 className="text-xl text-center font-normal mb-6">I am {shop?.owner?.full_name}. Owner of this shop.</h3>
 
           <div className="grid grid-cols-2 gap-8 px-4 py-12 min-h-full">
             <Image
@@ -89,7 +90,7 @@ const ShopPage = ({ params }) => {
                   </div>
 
                   <div
-                    className={`absolute -top-20 left-36 w-96 border-2 border-blue-400 rounded ${
+                    className={`absolute -top-20 left-36 w-96 rounded ${
                       !productFormOpen && "hidden"
                     }`}
                   >
@@ -151,20 +152,23 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
 
   return (
     <div className="shadow-xl rounded-xl col-span-1 p-4 border">
-      <div className="flex justify-between items-center mb-1">
+      <div className="flex justify-between items-start mb-2">
         <h1 className="text-xl font-semibold">{product.name}</h1>
-
+        
+    <div className="flex justify-center items-center gap-2 text-sm">
+    {product?.discount !== 0 && <p className="p-1 pr-2 bg-green-500 rounded text-white shadow">{product?.discount}% SALE</p>}
         <div className="flex justify-center items-center gap-1 bg-blue-400 rounded p-1 text-white">
           <RiCoinsLine className="text-sm" />
           <p>{product.price}</p>
         </div>
+    </div>
       </div>
       <div className="flex justify-start items-center gap-2 mb-4">
         <span className="bg-blue-200 rounded text-xs p-1">
           {product.product_type}
         </span>
-        <p>
-          By <span className="italic">{product.manufacturer}</span>
+        <p className="text-sm">
+          manufactured by <span className="italic">{product.manufacturer}</span>
         </p>
       </div>
 

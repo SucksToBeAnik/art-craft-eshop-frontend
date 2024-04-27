@@ -42,9 +42,12 @@ const SellerDashboard = ({ userId }) => {
         <>
           {shops.length ? (
             <div>
-              <h1 className="font-bold text-md mb-4">
-                You own {shops.length} shops
+              <div className="flex justify-start items-center gap-1 mb-4 text-md">
+              <h1 className="font-bold">
+                You own {shops.length} shops. Launch
               </h1>
+               <Link className="border-b-2 border-b-black font-semibold" href={"/shops/new"}>more?</Link>
+              </div>
               <div className="grid grid-cols-5 gap-4">
                 {shops.map((shop, idx) => {
                   return (

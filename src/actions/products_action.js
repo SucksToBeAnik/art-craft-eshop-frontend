@@ -160,3 +160,33 @@ export async function actionAddProductToFavourites(product_id) {
     }
   }
 }
+
+
+export async function actionGetMyBoughtProducts(){
+  try {
+    const user = await getCurrentUser();
+
+    const token = cookies().get("token");
+    const header = new Headers();
+    header.append("Authorization", `Bearer ${token.value}`);
+
+    const res = await fetch(
+      `${process.env.API_URL}/products/owner/details/${user.user_id}`,
+      {
+        headers: header,
+      }
+    );
+    const data = await res.json();
+
+    if (!res.ok) throw new Error(data.detail[0].msg);
+    return {
+      data: data.bought_products,
+      error: null
+    };
+  } catch (error) {
+    return {
+      data: null,
+      error: error.toString()
+    }
+  }
+}

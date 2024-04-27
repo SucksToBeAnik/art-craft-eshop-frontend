@@ -50,9 +50,12 @@ const CustomerDashboard = ({ userId }) => {
         <h1>Loading...</h1>
       ) : (
         <div className="">
-          <h1 className="font-bold mb-4">
-            You have bought total {userDetails.bought_products.length} products
+          <div className="mb-4 flex justify-start items-center gap-1">
+          <h1 className="font-bold">
+            You have bought total {userDetails.bought_products.length} products. See them
           </h1>
+          <Link href={"/products/me"} className="border-b-2 border-b-black font-semibold">here</Link>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-1 p-4 border-l-2">
               <h1 className="mb-4 font-semibold">Your Favourite Products</h1>

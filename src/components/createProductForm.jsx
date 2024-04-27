@@ -23,7 +23,7 @@ const CreateProductForm = ({ shopId, handleCloseForm }) => {
   return (
     <form
       action={action}
-      className="flex flex-col gap-2 py-2 px-8 rounded shadow-md w-full relative"
+      className="flex flex-col gap-2 py-2 px-8 rounded shadow-md w-full relative z-40 bg-zinc-100 border-2"
     >
       <IoCloseCircleOutline
         className="absolute right-2 top-2 text-2xl cursor-pointer"

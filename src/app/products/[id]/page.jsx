@@ -10,6 +10,7 @@ import Toast from "@/components/toast";
 import Cart from "@/components/cart";
 
 import Image from "next/image";
+import Link from "next/link";
 
 const SingleProductPage = ({ params }) => {
   const [product, setProduct] = useState({});
@@ -59,21 +60,24 @@ const SingleProductPage = ({ params }) => {
         <>
           {productFound ? (
             <div className="w-3/5 mx-auto rounded p-4 shadow-xl min-h-full">
-              <div className="flex justify-between items-center mb-8">
-                <h1 className="text-center text-3xl font-bold">
+              <div className="flex justify-between items-center mb-1">
+                <h1 className="text-center text-2xl font-bold">
                   {product?.name}
                 </h1>
 
-                <div className="flex items-center justify-center gap-2">
-                  <div className="flex justify-center items-center gap-1 bg-blue-400 p-2 rounded shadow text-white">
+                <div className="flex items-center justify-center gap-2 text-sm">
+                  {product?.discount !== 0 && <p className="p-1 pr-2 bg-green-500 rounded text-white shadow">{product?.discount}% SALE</p>}
+                  
+                  <div className="flex justify-center items-center gap-1 bg-blue-400 p-1 rounded shadow text-white">
                     <RiCoinsLine />
                     <p>{product?.price}</p>
                   </div>
-                  <p className="p-2 rounded bg-blue-400 text-white uppercase">
+                  <p className="p-1 rounded bg-blue-400 text-white uppercase">
                     {product.available ? "available" : "not available"}
                   </p>
                 </div>
               </div>
+              <p className="text-sm mb-10 pl-2 ml-4 border-l-2">Belongs to <Link className="border-b-2 border-b-black font-semibold" href={`/shops/${product.owner_shop_id}`}>{product.owner_shop.name}</Link></p>
 
               <div className="flex justify-between items-start gap-4 mb-8">
                 <Image

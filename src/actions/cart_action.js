@@ -137,3 +137,32 @@ export async function actionDeleteCartById(cartId){
     }
   }
 }
+
+
+export async function actionRemoveProductFromCart(cartId,productId){
+  try {
+    const token = cookies().get("token");
+    const header = new Headers();
+    header.append("Authorization", `Bearer ${token.value}`);
+
+    const res = await fetch(`${process.env.API_URL}/carts/${cartId}/remove/${productId}`,{
+        method:"PATCH",
+        headers:header
+    })
+    const data = await res.json()
+
+
+    if(!res.ok) throw new Error(data.detail[0].msg)
+
+    return {
+        data,
+        error: null
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+        data: null,
+        error: error.toString()
+    }
+  }
+}

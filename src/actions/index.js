@@ -21,6 +21,7 @@ export {
   actionDeleteProduct,
   actionGetFavouriteAndBoughtProducts,
   actionAddProductToFavourites,
+  actionGetMyBoughtProducts
 } from "./products_action";
 
 export {
@@ -29,7 +30,10 @@ export {
   actionFetchShopsByTerm,
 } from "./search_action";
 
-export { actionGetCartList, actionAddProductToCart,actionGetSingleCartById, actionCreateCart,actionDeleteCartById } from "./cart_action";
+export { actionGetCartList, actionAddProductToCart,actionGetSingleCartById, actionCreateCart,actionDeleteCartById,actionRemoveProductFromCart } from "./cart_action";
+
+export {actionOrderProductsFromCart} from "./order_action"
 
 export { actionDeleteShopByName,actionDeleteProductByName } from "./admin_action";
+
 
