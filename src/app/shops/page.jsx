@@ -2,8 +2,11 @@ import { getShops } from "@/actions/shops_action";
 import { RxAvatar } from "react-icons/rx";
 import { IoArrowDownCircleOutline } from "react-icons/io5";
 import Link from "next/link";
-
 import Image from "next/image";
+
+
+export const dynamic = "force-dynamic"
+
 
 const ShopsPage = async () => {
   const shops = await getShops();

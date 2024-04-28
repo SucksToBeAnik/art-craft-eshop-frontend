@@ -1,5 +1,6 @@
 "use client";
 
+
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { actionFetchShopsByTerm } from "@/actions";
