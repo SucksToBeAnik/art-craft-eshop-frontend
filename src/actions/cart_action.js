@@ -79,6 +79,7 @@ export async function actionAddProductToCart(cartId, productId) {
     return {
         data: null,
         error: error.toString()
+        
     }
   }
 }

@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { getCurrentUser } from "./auth_action";
 import axios, { AxiosError } from "axios";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 axios.defaults.baseURL = process.env.API_URL;
 
@@ -104,6 +105,7 @@ export async function createShop(formState, formData) {
     };
   }
 
+  revalidatePath("/shops")
   redirect(`/shops/${data.shop_id}`);
 }
 

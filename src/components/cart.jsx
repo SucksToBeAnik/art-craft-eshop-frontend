@@ -88,7 +88,6 @@ const Cart = ({ onShowCart, productId }) => {
     }
   }
 
-  console.log(cartProducts);
 
   return (
     <div className="w-[350px] min-h-[500px] rounded p-2 shadow bg-blue-200 text-black relative">
