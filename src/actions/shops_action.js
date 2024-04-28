@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { getCurrentUser } from "./auth_action";
 import axios, { AxiosError } from "axios";
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 axios.defaults.baseURL = process.env.API_URL;
 
@@ -36,29 +35,29 @@ export async function getShopById(id) {
   }
 }
 
-export async function actionGetShopsByOwnerId(owner_id){
+export async function actionGetShopsByOwnerId(owner_id) {
   const token = cookies().get("token");
   const header = new Headers();
   header.append("Authorization", `Bearer ${token.value}`);
 
-  try{
+  try {
     const res = await fetch(`${process.env.API_URL}/shops/owner/${owner_id}`, {
-      method:'GET',
-      headers: header
-    })
-    if(!res.ok) throw new Error(res.statusText)
+      method: "GET",
+      headers: header,
+    });
+    if (!res.ok) throw new Error(res.statusText);
 
-    const data = await res.json()
+    const data = await res.json();
     return {
       data,
-      error: null
-    }
-  }catch(error){
+      error: null,
+    };
+  } catch (error) {
     console.log(error);
     return {
       data: null,
-      error: error.toString()
-    }
+      error: error.toString(),
+    };
   }
 }
 
@@ -83,7 +82,7 @@ export async function createShop(formState, formData) {
         name: formData.get("shopName"),
         description: formData.get("description") || null,
         location: formData.get("location") || null,
-        website: formData.get("location") || null,
+        website: formData.get("website") || null,
         owner_id: owner.user_id,
       }),
     });
@@ -108,20 +107,55 @@ export async function createShop(formState, formData) {
   redirect(`/shops/${data.shop_id}`);
 }
 
-
-export async function actionDeleteShopById(shop_id){
+export async function actionDeleteShopById(shop_id) {
   const token = cookies().get("token");
   const header = new Headers();
   header.append("Authorization", `Bearer ${token.value}`);
   try {
-    const res =  await fetch(`${process.env.API_URL}/shops/${shop_id}`,{
-      method:"DELETE",
-      headers: header
-    })
-    if(!res.ok) return false
+    const res = await fetch(`${process.env.API_URL}/shops/${shop_id}`, {
+      method: "DELETE",
+      headers: header,
+    });
+    if (!res.ok) return false;
 
-    return true
+    return true;
   } catch (error) {
-    return false
+    return false;
   }
+}
+
+export async function actionUpdateShopById(shop_id, formState, formData) {
+  const name = formData.get("name") || null;
+  const description = formData.get("description") || null;
+  const location = formData.get("location") || null;
+  const website = formData.get("website") || null;
+
+  try {
+    const token = cookies().get("token");
+    const header = new Headers();
+    header.append("Authorization", `Bearer ${token.value}`);
+    header.append("Content-Type", "application/json");
+
+    const res = await fetch(`${process.env.API_URL}/shops/${shop_id}`, {
+      method: "PUT",
+      headers: header,
+      body: JSON.stringify({
+        name: name,
+        description: description,
+        location: location,
+        website: website,
+      }),
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.detail[0].msg);
+    }
+  } catch (error) {
+    return {
+      error: error.toString(),
+    };
+  }
+
+  redirect(`/shops/${shop_id}`);
 }

@@ -59,8 +59,12 @@ const ShopPage = ({ params }) => {
         <p>Loading...</p>
       ) : (
         <div className="p-4">
-          <h1 className="text-3xl text-center font-bold mb-2">Welcome to {shop?.name}</h1>
-          <h3 className="text-xl text-center font-normal mb-6">I am {shop?.owner?.full_name}. Owner of this shop.</h3>
+          <h1 className="text-3xl text-center font-bold mb-2">
+            Welcome to {shop?.name}
+          </h1>
+          <h3 className="text-xl text-center font-normal mb-6">
+            I am {shop?.owner?.full_name}. Owner of this shop.
+          </h3>
 
           <div className="grid grid-cols-2 gap-8 px-4 py-12 min-h-full">
             <Image
@@ -104,6 +108,19 @@ const ShopPage = ({ params }) => {
                 </div>
               </div>
               <p className="text-md text-gray-500">{shop?.description}</p>
+
+              <div className="flex justify-start items-center gap-2">
+                {shop?.website && (
+                  <span className="p-1 text-sm rounded bg-blue-400 text-white">
+                    {shop?.website}
+                  </span>
+                )}
+                {shop?.location && (
+                  <span className="p-1 text-sm rounded bg-blue-400 text-white">
+                    {shop?.location}
+                  </span>
+                )}
+              </div>
             </div>
 
             <div className="col-span-2">
@@ -154,14 +171,18 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
     <div className="shadow-xl rounded-xl col-span-1 p-4 border">
       <div className="flex justify-between items-start mb-2">
         <h1 className="text-xl font-semibold">{product.name}</h1>
-        
-    <div className="flex justify-center items-center gap-2 text-sm">
-    {product?.discount !== 0 && <p className="p-1 pr-2 bg-green-500 rounded text-white shadow">{product?.discount}% SALE</p>}
-        <div className="flex justify-center items-center gap-1 bg-blue-400 rounded p-1 text-white">
-          <RiCoinsLine className="text-sm" />
-          <p>{product.price}</p>
+
+        <div className="flex justify-center items-center gap-2 text-sm">
+          {product?.discount !== 0 && (
+            <p className="p-1 pr-2 bg-green-500 rounded text-white shadow">
+              {product?.discount}% SALE
+            </p>
+          )}
+          <div className="flex justify-center items-center gap-1 bg-blue-400 rounded p-1 text-white">
+            <RiCoinsLine className="text-sm" />
+            <p>{product.price}</p>
+          </div>
         </div>
-    </div>
       </div>
       <div className="flex justify-start items-center gap-2 mb-4">
         <span className="bg-blue-200 rounded text-xs p-1">
@@ -179,7 +200,9 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
         width={400}
       />
 
-      <p className="my-4 pl-5 border-l-2">{product.description || "This product has no description"}</p>
+      <p className="my-4 pl-5 border-l-2">
+        {product.description || "This product has no description"}
+      </p>
 
       <div className="flex justify-between items-center mt-8 relative">
         <Link
@@ -190,8 +213,8 @@ const ShopProduct = ({ product, onDeleteProduct, pending }) => {
         </Link>
 
         <span className="bg-white text-blue-400 p-2 rounded shadow">
-            {product.available ? "AVAILABLE" : "NOT AVAILABLE"}
-          </span>
+          {product.available ? "AVAILABLE" : "NOT AVAILABLE"}
+        </span>
         <FaRegTrashCan
           onClick={handleShowDeleteConfirm}
           className="inline-block absolute rounded-full p-2 text-4xl cursor-pointer bg-blue-400 text-white font-bold border-2 left-1/2 -translate-x-8 bottom-0"

@@ -6,12 +6,15 @@ export {
   actionLogutUser,
   switchUserType,
 } from "./auth_action";
+
+
 export {
   getShops,
   createShop,
   getShopById,
   actionGetShopsByOwnerId,
   actionDeleteShopById,
+  actionUpdateShopById
 } from "./shops_action";
 
 export {

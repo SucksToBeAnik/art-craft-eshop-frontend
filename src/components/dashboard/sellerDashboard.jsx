@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { HiPencilSquare } from "react-icons/hi2";
 import { FaSpinner } from "react-icons/fa6";
 
 const SellerDashboard = ({ userId }) => {
@@ -95,7 +96,12 @@ const SellerShop = ({ shop, onDeleteShop, deletePending }) => {
           href={`/shops/${shop.shop_id}`}
         >
           <FaRegEye />
-          Visit
+          <span>Visit</span>
+        </Link>
+
+        <Link href={`/shops/edit/${shop.shop_id}`} className="border-b-2 border-b-black flex justify-center items-center gap-1">
+          <HiPencilSquare />
+          <span>Edit</span>
         </Link>
 
         <button
