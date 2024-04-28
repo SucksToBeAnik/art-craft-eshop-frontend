@@ -8,7 +8,7 @@ import Image from "next/image";
 const ShopsPage = async () => {
   const shops = await getShops();
 
-  let renderedShops = null
+  let renderedShops = null;
 
   if (shops) {
     renderedShops = shops.map((shop) => {
@@ -18,19 +18,18 @@ const ShopsPage = async () => {
           className="rounded shadow-md col-span-1 p-4 bg-blue-500 text-white flex flex-col"
         >
           <div className="h-full">
-            <div className="flex justify-between items-center gap-2">
-              <h1 className="text-2xl font-semibold text-center uppercase">
-                {shop.name}
-              </h1>
-
-              <div className="flex gap-1 justify-center items-center">
+            <h1 className="text-xl font-semibold uppercase">
+              {shop.name}
+            </h1>
+            <div className="flex justify-start items-center gap-2 mt-4">
+              <div className="flex gap-1 justify-center items-center bg-white p-1 text-sm text-black rounded shadow">
                 <RxAvatar className="text-2xl" />
                 <span>{shop.owner.full_name}</span>
               </div>
+              <p className="bg-white p-1 text-sm text-black rounded shadow inline-block">
+                Launched on {shop.launch_date.slice(0, 10)}
+              </p>
             </div>
-            <p className="bg-white p-1 text-sm text-black rounded shadow inline-block mt-4">
-              Launched on {shop.launch_date.slice(0, 10)}
-            </p>
 
             <Image
               src={"/shop.jpg"}
@@ -57,7 +56,7 @@ const ShopsPage = async () => {
           <div className="flex justify-center items-center mt-1">
             <Link
               href={`/shops/${shop.shop_id}`}
-              className="bg-white text-black rounded-md shadow-md p-2 inline-block w-full text-center text-md font-semibold"
+              className="bg-white text-black rounded-md shadow-md py-2 inline-block w-full text-center text-sm font-semibold mt-4"
             >
               VISIT SHOP
             </Link>

@@ -37,7 +37,7 @@ const CreateShopPage = () => {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="website">Website</label>
-          <FieldInput type="url" name="website" placeholder="Add an external link if any" />
+          <FieldInput type="text" name="website" placeholder="Add an external link if any" />
         </div>
 
         <SubmitButton name={"Create Shop"} />

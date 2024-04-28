@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { RiCoinsLine } from "react-icons/ri";
 import Link from "next/link";
-import { CiShoppingCart } from "react-icons/ci";
 import { CiCirclePlus } from "react-icons/ci";
 import { IoArrowDownCircleOutline } from "react-icons/io5";
 import CreateProductForm from "@/components/createProductForm";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaSpinner } from "react-icons/fa";
+import { HiPencilSquare } from "react-icons/hi2";
 
 const ShopPage = ({ params }) => {
   const [shop, setShop] = useState({});
@@ -59,9 +59,14 @@ const ShopPage = ({ params }) => {
         <p>Loading...</p>
       ) : (
         <div className="p-4">
-          <h1 className="text-3xl text-center font-bold mb-2">
-            Welcome to {shop?.name}
-          </h1>
+          <div className="mb-2 flex justify-center items-center gap-4">
+            <h1 className="text-3xl text-center font-bold mb-2">
+              Welcome to {shop?.name}
+            </h1>
+            <Link href={`/shops/edit/${shop?.shop_id}`} className="inline text-3xl ">
+              <HiPencilSquare />
+            </Link>
+          </div>
           <h3 className="text-xl text-center font-normal mb-6">
             I am {shop?.owner?.full_name}. Owner of this shop.
           </h3>
@@ -111,9 +116,9 @@ const ShopPage = ({ params }) => {
 
               <div className="flex justify-start items-center gap-2">
                 {shop?.website && (
-                  <span className="p-1 text-sm rounded bg-blue-400 text-white">
+                  <a href={`//${shop?.website}`} target="_blank" className="p-1 text-sm rounded bg-blue-400 text-white">
                     {shop?.website}
-                  </span>
+                  </a>
                 )}
                 {shop?.location && (
                   <span className="p-1 text-sm rounded bg-blue-400 text-white">
